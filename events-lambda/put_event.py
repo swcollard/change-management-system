@@ -16,7 +16,11 @@ def lambda_handler(event, context):
         print event
         return {
             'statusCode': 400,
-            'body': json.dumps("Bad Request. Missing a required parameter.")
+            'body': json.dumps("Bad Request. Missing a required parameter."),
+            'headers': {
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Headers':'Content-Type,X-Amz-Security-Token'
+            }
         }
 
     table.put_item(
@@ -30,5 +34,9 @@ def lambda_handler(event, context):
     )
     return {
         'statusCode': 200,
-        'body': json.dumps("Logged event: " + description)
+        'body': json.dumps("Logged event: " + description),
+        'headers': {
+            'Access-Control-Allow-Origin':'*',
+            'Access-Control-Allow-Headers':'Content-Type,X-Amz-Security-Token'
+        }
     }

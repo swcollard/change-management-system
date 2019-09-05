@@ -25,7 +25,12 @@ def lambda_handler(event, context):
         print event
         return {
             'statusCode': 400,
-            'body': json.dumps("Bad Request. Missing a required parameter.")
+            'body': json.dumps("Bad Request. Missing a required parameter."),
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Headers':'Content-Type,X-Amz-Security-Token'
+            }
         }
 
     response = table.scan(
@@ -33,5 +38,10 @@ def lambda_handler(event, context):
     )
     return {
         'statusCode': 200,
-        'body': json.dumps(response['Items'], cls=DecimalEncoder)
+        'body': json.dumps(response['Items'], cls=DecimalEncoder),
+        'headers': {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin':'*',
+            'Access-Control-Allow-Headers':'Content-Type,X-Amz-Security-Token'
+        }
     }
